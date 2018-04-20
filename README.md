@@ -63,11 +63,21 @@ So just do 'mvn test'.
 The tests should how to use this data structure that I named SemiPerfect, because the data structure
 acts somewhat like a perfect hash, but it - unlike a perfect hash - is dynamic in nature.
 
+Note that one of my repos here has clustering algorithm that clusters long values. So one could
+first convert some collection of strings to a collection of long values, then feed those longs
+to that clustering algorithm. Once the results come back, each cluster comprising longs can be
+converted back to a cluster of strings.  So that this is example how it can be convenient to
+convert strings into longs sometimes.
+
 The savvy reader may wonder this code was not paired with some backing store where the strings could be stored
 and fetched? This simply wasn't something I needed at the time, so I never got around to doing this;
 however, it wouldn't be too hard to pair this code with backing store - be it BerkeleyDB, Cassandra or Avro
-or something else - such that all the pairings of string and long number would be stored somewhere, such that given, a long value, one could
-retrieve the original string from the backing store.
+or something else - such that all the pairings of string and long number would be stored somewhere, such that given, a long value, one could retrieve the original string from the backing store.
 
+Other savvy readers might wonder if this algorith can scale out bit data style?! The answer is yes.
+The data structures would be easily sharded across multiple nodes, so that each string would
+be associated with a node number and a long value.  
 
+Admittedly, my scale out approach does not address scaling a set of worker nodes up and down. Eventually, if
+I ever create a big data version of this, I will consider how to handle elastic capacity.
 
